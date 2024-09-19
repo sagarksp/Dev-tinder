@@ -1,0 +1,23 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "Devtinder where all developer can communicate",
+  "main": "index.js",
+  "scripts": {
+    "start" : "node src/app.js",
+    "dev" : "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagarksp/Dev-tinder.git"
+  },
+  "author": "Sagar Kashyap",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sagarksp/Dev-tinder/issues"
+  },
+  "homepage": "https://github.com/sagarksp/Dev-tinder#readme",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
