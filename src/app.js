@@ -1,65 +1,36 @@
-//importing the express library
 const express = require("express");
 
-//Now creating a application of express.js
 const app = express();
 
-//Handling requests
-//this is use for default / path sare path p yhi rhega kyoki default h ye isme koi path nahi diya humne
+app.use("/user" , [(req,res,next) =>{
 
-// app.use((req,res)=>{
-//     res.send("Hello from the default server ")
-// })
+  // is function ko route handlerbolte hai
+  console.log("1 response");
+  
+  next();
+  res.send("1st response");
+}],
+[(req,res,next)=>{
+  console.log("2nd response")
+ 
+  next()
+  res.send("2nd response")
+},
+(req,res,next) =>{
+  console.log("3rd response");
+  // res.send("3rd response")
+  next()
+},
+(req,res,next)=>{
+  console.log("4th response");
+  res.send("4th response")
+  next()
+}]
+)
 
 
-//code is executing line by line as js is a single threaded language 
 
-app.get("/hello", (req, res) => {
-  res.send("Hello from the hello path");
-});
 
-app.post("/test", (req, res) => {
-  res.send("i am a post api ");
-});
-
-app.delete("/delete", (req, res) => {
-  res.send("Hello from the delete");
-});
-
-app.get("/ab?c", (req,res) =>{
-  res.send("ternary ab c ")
+app.listen(7777, ()=>{
+  console.log("server conncected succesfully")
 })
-
-app.get("/db+c",(req,res)=>{
-  res.send("we can add b as mush i can")
-})
-
-//reGEX with a api name m a  aana chaiye 
-app.get(/a/,(req,res)=>{
-  res.send("regex get api")
-})
-
-//last m fly aaana chaiye
-app.get(/.*fly$/,(req,res)=>{
-  res.send("fly wali api")
-})
-
-app.get("/users/:userId/:books/:bookId/:new",(req,res)=>{
-    res.send(req.params)
-})
-
-app.get("/users?userid=101 & password = testing",(req,res)=>{
-  // res.send(req.query);
-  console.log(req.require)
-})
-//we can pass diffeerent path before (just before callback we have to write path)
-
-//when we have to create server than i have to listen
-//it shows that app is listening all request at port 3000
-
-app.listen(7777, () => {
-    
-  //this console is only executed when the server is running sucessfully
-
-  console.log("Server is sucessfully listening on PORT 7777");
-});
