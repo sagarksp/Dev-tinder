@@ -1,46 +1,29 @@
 const express = require("express");
 const app = express();
 
-const mongoose = require("mongoose");
+const connectDB = require("./config/database");
 
-const ConnectDB = require("./config/database");
+const User = require("./models/users")
 
-const User = require("./models/users.js");
+//middleware which convert our json data to js object
+app.use(express.json())
+
+app.post("/signup", async (req,res)=>{
+  console.log(req.body)
+  const user = new User(req.body);
+
+  await user.save();
+  res.send("data is updated sucessfully")
 
 
-app.post("/signup", async(req,res)=>{
- 
 
-  //logic 
-  const user = new User({
-    firstName:"Sagar",
-    lastName:"Kashyap",
-    age:24,
-    email:"kspsagar01@gmail.com"
-  });
-
-  try{
-    await user.save();
-    res.send("user added sucessfully");
-  } catch( err) {
-    res.status(400).send("Error"+ err.message)
-  }
-  
 })
 
-// database 
- ConnectDB().then(()=>{
-  console.log("db connected sucessfully")
+connectDB().then(()=>{
+  console.log("database is connected sucessfully")
   app.listen(7777,()=>{
-      console.log("connected to the server")
-  
+    console.log("server connected sucessfully go ahead with your thoughts")
   })
-
-}
- ).catch((err)=>{
-      console.error("not coneected to database")
- 
+}).catch((err)=>{
+  console.error("not connected to database sucessfully soomething went wrong" + err.message)
 })
-
- 
-
