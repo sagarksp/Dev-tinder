@@ -1,22 +1,46 @@
 const express = require("express");
 const app = express();
-const {userAuth,adminAuth} = require("./miidleware/userauth")
+
+const mongoose = require("mongoose");
+
+const ConnectDB = require("./config/database");
+
+const User = require("./models/users.js");
 
 
-app.use("/admin" , adminAuth)
+app.post("/signup", async(req,res)=>{
+ 
 
-app.use("/user",userAuth);
-app.get("/user/getdata", (req, res) => {
-  res.send("2nd auth user get data");
+  //logic 
+  const user = new User({
+    firstName:"Sagar",
+    lastName:"Kashyap",
+    age:24,
+    email:"kspsagar01@gmail.com"
+  });
+
+  try{
+    await user.save();
+    res.send("user added sucessfully");
+  } catch( err) {
+    res.status(400).send("Error"+ err.message)
+  }
+  
 })
 
-app.get("/admin/userdata",(req,res)=>{
-  console.log("server comnn")
-  res.send("admin userdata")
+// database 
+ ConnectDB().then(()=>{
+  console.log("db connected sucessfully")
+  app.listen(7777,()=>{
+      console.log("connected to the server")
+  
+  })
+
+}
+ ).catch((err)=>{
+      console.error("not coneected to database")
+ 
 })
 
+ 
 
-
-app.listen(7777, () => {
-  console.log("server run sucessfully");
-});
