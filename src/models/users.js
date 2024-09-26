@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+ const validator = require("validator")
 
 const userschema =new mongoose.Schema({
     firstName:{
@@ -23,11 +24,24 @@ const userschema =new mongoose.Schema({
         required:true,
         lowercase:true,
         trim:true,
-        unique:true
+        unique:true,
+        //lets validate our email
+        //value m email aayi jo enter ki fir validator n check ki ki jo value h wo validator email se match nhi kr rhi to to 
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("email is not valid enter valid email"+ value)
+            }
+        }
     },
     password:{
         type:String,
         required:true,
+        //validate the password checek if it is strong password or not
+        validate(value){
+            if(!validator.isStrongPassword(value)){
+                throw new Error("password in not as per norms please write strong password" + value)
+            }
+        }
 
     },
     age:{
