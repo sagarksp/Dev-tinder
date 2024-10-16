@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
  const validator = require("validator")
+ const jwt  = require("jsonwebtoken")
+ const cookieParser = require("cookie-parser");
+ const bcrypt = require("bcrypt")
+
+
+
 
 const userschema =new mongoose.Schema({
     firstName:{
@@ -44,6 +50,9 @@ const userschema =new mongoose.Schema({
         }
 
     },
+    skills:{
+        type:[String],
+    },
     age:{
         type:Number,
         min:18
@@ -55,12 +64,34 @@ const userschema =new mongoose.Schema({
                 throw new Error("Gender data is not valid")
         }
     },
-    skills:{
-        type:[String],
+    photoUrl:{
+        type:String,
+        default:""
     }
+    
 },
 {
     timestamps:true
 })
 
-module.exports = mongoose.model("User", userschema);
+userschema.methods.getJWT  = async function (){
+
+    const user = this;
+    const token = await jwt.sign({_id:user._id}, "DEV@tinder", {expiresIn:"7d"})
+    console.log(token)
+    return token;
+
+}
+
+//creating password comparison here
+
+userschema.methods.validPassword = async function(passwordInputByUser) {
+    const user = this;
+    const hashPassword = user.password;
+  
+    const isPasswordvalid = await bcrypt.compare(passwordInputByUser, hashPassword);
+    
+    return isPasswordvalid;
+}
+
+module.exports = mongoose.model('User', userschema);
