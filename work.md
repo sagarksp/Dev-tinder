@@ -5,3 +5,14 @@
 - Create routes folder for managding auth, profile, request routers
 - Create authRouter, profileRouter, RequestRouter
 - Import these routers in app.js 
+
+- CREATE a connection request schema
+- Send connection request API
+- Proper validation of data
+- Handled all corner cases
+- $or query use by using documnet
+- Schema.pre("save" function) created which is check every time before save
+- Indexes and the use of the compound indexes
+- Why do we need index in DB
+- What is the advantages and disadvantages of the mongodb
+- Compound indexes

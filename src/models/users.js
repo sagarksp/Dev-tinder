@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
  const validator = require("validator")
  const jwt  = require("jsonwebtoken")
- const cookieParser = require("cookie-parser");
  const bcrypt = require("bcrypt")
 
 
@@ -31,6 +30,11 @@ const userschema =new mongoose.Schema({
         lowercase:true,
         trim:true,
         unique:true,
+        enum:{
+            values:["male","female","others"],
+            message:`{Value} is incorrect gender type`
+        },
+
         //lets validate our email
         //value m email aayi jo enter ki fir validator n check ki ki jo value h wo validator email se match nhi kr rhi to to 
         validate(value){
@@ -74,7 +78,7 @@ const userschema =new mongoose.Schema({
     timestamps:true
 })
 
-userschema.methods.getJWT  = async function (){
+userschema.methods.getJWT  = async function (){//yha p arrow function kaamm nahi krega 
 
     const user = this;
     const token = await jwt.sign({_id:user._id}, "DEV@tinder", {expiresIn:"7d"})
@@ -94,4 +98,4 @@ userschema.methods.validPassword = async function(passwordInputByUser) {
     return isPasswordvalid;
 }
 
-module.exports = mongoose.model('User', userschema);
+module.exports = mongoose.model('User', userschema);//first name is the name of the model by using firsts letter as a capital letter

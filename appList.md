@@ -4,7 +4,7 @@
 - POST / login
 - POST / logout
 
-
+# authRouter
 - GET/profile/view
 - PATCH / profile/edit
 - PATCH /profile/password

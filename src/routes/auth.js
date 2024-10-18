@@ -84,6 +84,19 @@ authRouter.post("/signup",async (req,res)=>{
       res.status(404).send("something wrong while login " + err.message)
       console.log(err.message)
     }
+  }) 
+
+  authRouter.post("/logout", async (req,res)=>{
+    // res.cookie("token" , null, {
+    //   expires: new Date(Date.now())}) //expiring cookies right there and the user will be logout  
+   
+    // res.send("User logout sucessfully ");
+    //or
+
+    res.cookie("token",null, {
+      expires: new Date(Date.now())
+    }).send("user logout sucessfully ")
+
   })
 
 module.exports = authRouter; 
