@@ -61,6 +61,20 @@ userRouter.get("/feed", userAuth, async (req, res)=>{
         //It retrieves the logged-in user's information.
         const loggedInUser = req.user;
 
+        const page = parseInt(req.query.page) || 1;
+        let limit = parseInt(req.query.limit) || 10;
+
+        limit = limit>50 ? 50 : limit;
+        const skip  = (page-1)*limit; 
+
+
+        // if(limit>50){
+        //     limit =50
+        // }
+        // else {
+        //     limit = limit
+        // }
+
         const connectionRequests  = await ConnectionRequest.find({
             $or:[
                 {fromUserId:loggedInUser._id},
@@ -86,7 +100,7 @@ userRouter.get("/feed", userAuth, async (req, res)=>{
 
             ]
            
-        }).select(USER_INFO)
+        }).select(USER_INFO).skip(skip).limit(limit)
         
          
        res.send(users)
