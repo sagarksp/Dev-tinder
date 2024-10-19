@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
  const validator = require("validator")
+ const jwt  = require("jsonwebtoken")
+ const bcrypt = require("bcrypt");
+const { type } = require("express/lib/response");
+
+
+
 
 const userschema =new mongoose.Schema({
     firstName:{
@@ -25,6 +31,8 @@ const userschema =new mongoose.Schema({
         lowercase:true,
         trim:true,
         unique:true,
+        
+
         //lets validate our email
         //value m email aayi jo enter ki fir validator n check ki ki jo value h wo validator email se match nhi kr rhi to to 
         validate(value){
@@ -44,23 +52,57 @@ const userschema =new mongoose.Schema({
         }
 
     },
+    skills:{
+        type:[String],
+    },
     age:{
         type:Number,
         min:18
     },
     gender:{
         type:String,
-        validate (value){
-            if(!["male","female","others"].includes(value))
-                throw new Error("Gender data is not valid")
-        }
+        enum:{
+            values:["male","female","others"],
+            message:`{Value} is incorrect gender type`
+        },
+        // validate (value){
+        //     if(!["male","female","others"].includes(value))
+        //         throw new Error("Gender data is not valid")
+        // }
     },
-    skills:{
-        type:[String],
+    aboutMe:{
+        type:String,
+        maxLength:20,
+        default:"Hello i am developer love to connect with you"
+    },
+    photoUrl:{
+        type:String,
+        default:""
     }
+    
 },
 {
     timestamps:true
 })
 
-module.exports = mongoose.model("User", userschema);
+userschema.methods.getJWT  = async function (){//yha p arrow function kaamm nahi krega 
+
+    const user = this;
+    const token = await jwt.sign({_id:user._id}, "DEV@tinder", {expiresIn:"7d"})
+    console.log(token)
+    return token;
+
+}
+
+//creating password comparison here
+
+userschema.methods.validPassword = async function(passwordInputByUser) {
+    const user = this;
+    const hashPassword = user.password;
+  
+    const isPasswordvalid = await bcrypt.compare(passwordInputByUser, hashPassword);
+    
+    return isPasswordvalid;
+}
+
+module.exports = mongoose.model('User', userschema);//first name is the name of the model by using firsts letter as a capital letter
