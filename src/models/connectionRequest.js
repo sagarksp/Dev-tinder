@@ -5,10 +5,12 @@ const connectionRequestSchema = new mongoose.Schema({
   fromUserId:{
     type:mongoose.Schema.Types.ObjectId,
     require:true,
+    ref:"User"//here we make the connection with the User Scehma table
   },
   toUserId:{
     type:mongoose.Schema.Types.ObjectId,
     require:true,
+    ref:"User"
   },
   status:{
     type:String,

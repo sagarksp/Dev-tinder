@@ -16,3 +16,12 @@
 - Why do we need index in DB
 - What is the advantages and disadvantages of the mongodb
 - Compound indexes
+
+- wrote code with proper validations for POST /requests/review/:status/:requestId
+- Thought process of - POST & GET API'S
+- USED REF AND POPULATE 
+- create GET/user/requests/recieved with all the cehecks
+- create GET/user/connection
+
+- logic for get api feed
+- exploring the $nin, $or, $and, new Set(), how to hide pending and ceonnected users

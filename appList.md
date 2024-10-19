@@ -9,15 +9,11 @@
 - PATCH / profile/edit
 - PATCH /profile/password
 
+# requestRouter
+- POST /request/send/:status/:requestId
+- POST /request/review/:status/:reqestId
 
-- POST /request/send/interested/:userId
-- POST /request/send/ignored/:userId
-
-
-- POST /request/review/accepted/:reqestId
-- POST /request/review/rejected/:requestId
-
-
+# userRouter
 - GET/ connections
 - GET/ request/received
 - GET/ feed - Gets you the 

@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
  const validator = require("validator")
  const jwt  = require("jsonwebtoken")
- const bcrypt = require("bcrypt")
+ const bcrypt = require("bcrypt");
+const { type } = require("express/lib/response");
 
 
 
@@ -30,10 +31,7 @@ const userschema =new mongoose.Schema({
         lowercase:true,
         trim:true,
         unique:true,
-        enum:{
-            values:["male","female","others"],
-            message:`{Value} is incorrect gender type`
-        },
+        
 
         //lets validate our email
         //value m email aayi jo enter ki fir validator n check ki ki jo value h wo validator email se match nhi kr rhi to to 
@@ -63,10 +61,19 @@ const userschema =new mongoose.Schema({
     },
     gender:{
         type:String,
-        validate (value){
-            if(!["male","female","others"].includes(value))
-                throw new Error("Gender data is not valid")
-        }
+        enum:{
+            values:["male","female","others"],
+            message:`{Value} is incorrect gender type`
+        },
+        // validate (value){
+        //     if(!["male","female","others"].includes(value))
+        //         throw new Error("Gender data is not valid")
+        // }
+    },
+    aboutMe:{
+        type:String,
+        maxLength:20,
+        default:"Hello i am developer love to connect with you"
     },
     photoUrl:{
         type:String,
