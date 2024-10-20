@@ -10,18 +10,20 @@ const { type } = require("express/lib/response");
 const userschema =new mongoose.Schema({
     firstName:{
         type:String,
-        minLength:5,
+        minLength:4,
         maxLength:40,
+        
         
     },
     lastName:{
         type:String,
+        
     },
     userName:{
         type:String,
-        minLength:5,
-        required:true,
-        unique:true
+        minLength:3,
+        
+       
 
     },
     
@@ -72,12 +74,12 @@ const userschema =new mongoose.Schema({
     },
     aboutMe:{
         type:String,
-        maxLength:20,
+        maxLength:500,
         default:"Hello i am developer love to connect with you"
     },
     photoUrl:{
         type:String,
-        default:""
+        default:"https://s3.amazonaws.com/37assets/svn/https://media.gettyimages.com/id/485839850/vector/businessman-icon-on-a-white-background.jpg?s=1024x1024&w=gi&k=20&c=q1oT6ovYdZI-tJ3mgkbAPClld74wik5LnwSaKZYlkXA=-default-avatar.png"
     }
     
 },

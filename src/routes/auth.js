@@ -21,18 +21,24 @@ authRouter.post("/signup",async (req,res)=>{
     try{
       // req data gya yaha se validate sign updata m
       validateSignupData(req);
-      const {password, firstName, lastName, emailid,userName,skills,photoUrl} = req.body;
+      const {password, firstName, lastName, emailid,userName,skills,photoUrl,age,gender} = req.body;
       
       const passwordHash = await bcrypt.hash(password,10);
       console.log(passwordHash)
   
   
       // const user = User(req.body)
-      const user = User({firstName, lastName, emailid, userName, password:passwordHash, skills, photoUrl})
+      const user = User({firstName, lastName, emailid, userName, password:passwordHash, skills, photoUrl,age,gender})
   
   
-      await user.save()
-      res.send("user added sucessfully")
+      const savedUser = await user.save();
+      const token = await savedUser.getJWT();
+
+      res.cookie("token", token, {
+        expires: new Date(Date.now()+ 8*3600000)
+      })
+      
+      res.json({message: "User added sucessfully !" , data:savedUser})
     }catch(err){
       console.log("something went wrong"+ err.message)
       res.status(404).send("something went wrong");
@@ -44,10 +50,9 @@ authRouter.post("/signup",async (req,res)=>{
   authRouter.post("/login", async (req,res)=>{
   
   
-    console.log(req.body)
     try{
       const {emailid, password} = req.body;
-      console.log(password)
+    
       const user = await User.findOne({emailid: emailid});//finding one from user
       
       if(!user){
@@ -73,7 +78,6 @@ authRouter.post("/signup",async (req,res)=>{
   
         res.cookie("token" , token, {
           expires: new Date(Date.now() + 8 * 3600000)}) //expiring cookies in 8 hours
-       
         res.send(user);
       
        } 

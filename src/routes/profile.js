@@ -44,6 +44,7 @@ profileRouter.get("/profile/view", userAuth , async (req,res)=>{
         //This code takes the data sent by the user (in req.body), and updates the logged-in user's information with those new values. It allows the user to change their details, like updating their profile information
     
         await loggedInUser.save();//save data in the database
+        
     
         res.json({
           message: `${loggedInUser.firstName}, your profile updated successfuly`,

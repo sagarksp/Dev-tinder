@@ -4,12 +4,12 @@ const validateSignupData = (req)=>{
 
     // req ko ek ek karke check karege
     // req body se saara data aaega
-    const {firstName, lastName, password, emailid} = req.body;
+    const {firstName, lastName, password, emailid,userName} = req.body;
 
-    if(!firstName || !lastName){
-        throw new Error("name is not valid ")
-    }
-    else if(firstName.length < 4 && firstName.length >50){
+    // if(!firstName || !lastName || !userName){
+    //     throw new Error(" error while checking Names name is not valid ")
+    // }
+     if(firstName.length < 4 && firstName.length >50){
         throw new Error("First name is not valid it must has character between 5 to 50")
     }
     else if(!validator.isEmail(emailid)){
@@ -21,15 +21,16 @@ const validateSignupData = (req)=>{
 }
 
 const validateEditProfileData = (req) => {
+  try{
     //only these fields can be editable
     const allowedEditFields = [
       "firstName",
       "lastName",
-      "emailId",
       "photoUrl",
+      "userName",
       "gender",
       "age",
-      "about",
+      "aboutMe",
       "skills",
     ];
   
@@ -38,6 +39,10 @@ const validateEditProfileData = (req) => {
     );
   
     return isEditAllowed;
+  }
+  catch(err){
+    res.send("message come from validation profile data"+ err.message)
+  }
   };
 
 module.exports = { validateSignupData, validateEditProfileData}

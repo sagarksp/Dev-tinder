@@ -10,9 +10,10 @@ const cookieParser = require("cookie-parser");
 
 const cors = require("cors")
 
+
 const userAuth = require("./miidleware/userauth")
 // app.use(cors(),({origin:"http://localhost:5174",Credential:true}))
-app.use(cors({origin:"http://localhost:5174", credentials:true}))
+app.use(cors({origin:"http://localhost:5173", credentials:true, methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],}))
 app.use(express.json());
 app.use(cookieParser());
 
