@@ -16,7 +16,7 @@ authRouter.post("/signup",async (req,res)=>{
     //   lastName:"radharani",
     //   // emailid:"shrikrishna@shriradha.com"
     // })
-    
+
     
     try{
       // req data gya yaha se validate sign updata m
@@ -32,7 +32,7 @@ authRouter.post("/signup",async (req,res)=>{
   
   
       const savedUser = await user.save();
-      const token = await savedUser.getJWT();
+      const token = await savedUser.getJWT  ();
 
       res.cookie("token", token, {
         expires: new Date(Date.now()+ 8*3600000)
@@ -41,7 +41,7 @@ authRouter.post("/signup",async (req,res)=>{
       res.json({message: "User added sucessfully !" , data:savedUser})
     }catch(err){
       console.log("something went wrong"+ err.message)
-      res.status(404).send("something went wrong");
+      res.status(404).send("something went wrong");                                                     
     }
   });
   
@@ -75,6 +75,7 @@ authRouter.post("/signup",async (req,res)=>{
   
         //getting token from userschema we overload get the token task to userschema methods 
         const token = await user.getJWT();
+       
   
         res.cookie("token" , token, {
           expires: new Date(Date.now() + 8 * 3600000)}) //expiring cookies in 8 hours
@@ -89,6 +90,7 @@ authRouter.post("/signup",async (req,res)=>{
       console.log(err.message)
     }
   }) 
+  
 
   authRouter.post("/logout", async (req,res)=>{
     // res.cookie("token" , null, {

@@ -1,19 +1,14 @@
 const express = require("express");
 const app = express();
 
-
-
-
 const connectDB = require("./config/database")
+
 const User = require("./models/users");
 const cookieParser = require("cookie-parser");
-
 const cors = require("cors")
 
-
-const userAuth = require("./miidleware/userauth")
 // app.use(cors(),({origin:"http://localhost:5174",Credential:true}))
-app.use(cors({origin:"http://localhost:5173", credentials:true, methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],}))
+app.use(cors({origin:"https://dev-tinder-web-tau.vercel.app/", credentials:true, methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],}))
 app.use(express.json());
 app.use(cookieParser());
 
@@ -22,20 +17,10 @@ const profileRouter = require("./routes/profile");
 const requestRouter = require('./routes/requests');
 const userRouter = require("./routes/user")
 
-
-
-
-
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
 app.use("/",userRouter)
-
-
-
-
-
-
 
 //api for sending connection request 
 

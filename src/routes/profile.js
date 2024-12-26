@@ -41,7 +41,7 @@ profileRouter.get("/profile/view", userAuth , async (req,res)=>{
         const loggedInUser = req.user;
     
         Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
-        //This code takes the data sent by the user (in req.body), and updates the logged-in user's information with those new values. It allows the user to change their details, like updating their profile information
+        //This code takes the data sent by the user (in req.body), and updates the logged-in user's information with those new values. //It allows the user to change their details, like updating their profile information
     
         await loggedInUser.save();//save data in the database
         
